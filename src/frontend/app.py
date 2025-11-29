@@ -1,8 +1,12 @@
 #src/frontend/app.py
+import sys, os
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "../..")))
+
 import streamlit as st
 import uuid
 import requests
 from src.config.settings import settings
+
 
 API_URL = settings.API_URL
 

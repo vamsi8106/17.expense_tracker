@@ -10,6 +10,7 @@ services:
     env_file:
       - .env
     volumes:
-      - ./db:/app/db              # <-- SQLite stored here
-      - ./logs:/app/logs          # <-- Logs stored here
+      - ./logs:/app/logs
+    extra_hosts:
+      - "host.docker.internal:host-gateway"   # <-- REQUIRED ON LINUX
     restart: always

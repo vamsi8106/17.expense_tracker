@@ -8,11 +8,15 @@ ENV PYTHONUNBUFFERED=1 \
 WORKDIR /app
 
 RUN apt-get update && apt-get install -y --no-install-recommends \
-    build-essential curl \
+    build-essential curl ca-certificates openssl \
     && rm -rf /var/lib/apt/lists/*
 
+# Install uv properly
 RUN curl -LsSf https://astral.sh/uv/install.sh | sh
 ENV PATH="/root/.local/bin:${PATH}"
+
+# Verify installation (important)
+RUN which uv && uv --version
 
 COPY pyproject.toml uv.lock ./
 RUN uv sync --no-dev
@@ -23,7 +27,6 @@ COPY src ./src
 
 # ------------ FINAL STAGE ------------
 FROM base AS final
-
 EXPOSE 8000
 EXPOSE 8501
 
