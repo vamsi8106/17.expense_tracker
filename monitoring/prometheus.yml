@@ -1,0 +1,25 @@
+global:
+  scrape_interval: 5s
+  evaluation_interval: 5s
+
+scrape_configs:
+
+  # -------------------------------
+  # Expense Assistant (FastAPI)
+  # -------------------------------
+  - job_name: "expense_fastapi"
+    metrics_path: "/metrics"
+    scheme: http
+    static_configs:
+      - targets: ["10.98.137.102:8000"]
+        labels:
+          service: "expense-assistant"
+
+  # -------------------------------
+  # Node Exporter (system metrics)
+  # -------------------------------
+  - job_name: "node_exporter"
+    static_configs:
+      - targets: ["10.98.137.102:9100"]
+        labels:
+          service: "node"

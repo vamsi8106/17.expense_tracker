@@ -1,0 +1,30 @@
+# Python cache
+__pycache__/
+*.pyc
+*.pyo
+
+# Virtual environments
+.venv/
+venv/
+
+# Logs and database (kept outside Docker)
+logs/
+expenses.db
+
+# OS / editor crap
+.DS_Store
+.vscode/
+.idea/
+
+# Git
+.git/
+.gitignore
+
+# Notebooks
+*.ipynb
+
+# Shell script
+run.sh
+experiment.ipynb
+commands.txt
+.env

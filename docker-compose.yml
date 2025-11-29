@@ -1,0 +1,15 @@
+version: "3.9"
+
+services:
+  expense_tracker:
+    build: .
+    container_name: expense_tracker
+    ports:
+      - "8000:8000"
+      - "8501:8501"
+    env_file:
+      - .env
+    volumes:
+      - ./db:/app/db              # <-- SQLite stored here
+      - ./logs:/app/logs          # <-- Logs stored here
+    restart: always

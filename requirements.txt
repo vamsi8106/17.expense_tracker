@@ -1,0 +1,14 @@
+fastapi
+uvicorn
+streamlit
+redis
+langchain
+langchain-openai
+langchain-community
+langchain-mcp-adapters
+langgraph
+fastmcp
+python-dotenv
+dateparser
+requests
+httpx

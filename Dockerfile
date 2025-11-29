@@ -1,0 +1,33 @@
+# ------------ Base Stage ------------
+FROM python:3.12-slim AS base
+
+ENV PYTHONUNBUFFERED=1 \
+    PIP_NO_CACHE_DIR=1 \
+    PYTHONPATH="/app"
+
+WORKDIR /app
+
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    build-essential curl \
+    && rm -rf /var/lib/apt/lists/*
+
+RUN curl -LsSf https://astral.sh/uv/install.sh | sh
+ENV PATH="/root/.local/bin:${PATH}"
+
+COPY pyproject.toml uv.lock ./
+RUN uv sync --no-dev
+RUN uv add uvicorn[standard]
+ENV PATH="/app/.venv/bin:${PATH}"
+
+COPY src ./src
+
+# ------------ FINAL STAGE ------------
+FROM base AS final
+
+EXPOSE 8000
+EXPOSE 8501
+
+CMD ["/bin/bash", "-c", "\
+    uvicorn src.api.main:app --host 0.0.0.0 --port 8000 & \
+    streamlit run src/frontend/app.py --server.port=8501 --server.address=0.0.0.0 \
+"]
