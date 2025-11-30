@@ -29,7 +29,7 @@ COPY src ./src
 FROM base AS final
 
 # Copy .env into container
-COPY .env /app/.env
+# COPY .env /app/.env
 
 # Load .env for all child processes (Streamlit, Uvicorn, MCP server)
 # ENV ENV_FILE="/app/.env"
