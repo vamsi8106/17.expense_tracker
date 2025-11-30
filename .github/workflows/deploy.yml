@@ -1,0 +1,46 @@
+name: Deploy (EC2 Self-Hosted)
+
+on:
+  push:
+    branches: [ "main" ]
+
+jobs:
+  deploy:
+    runs-on: self-hosted
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Login to AWS ECR
+        run: |
+          aws ecr get-login-password --region ${{ secrets.AWS_REGION }} \
+          | docker login --username AWS --password-stdin \
+            ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.${{ secrets.AWS_REGION }}.amazonaws.com
+
+      - name: Build Docker Image
+        run: |
+          IMAGE="${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.${{ secrets.AWS_REGION }}.amazonaws.com/${{ secrets.ECR_REPOSITORY }}:latest"
+          docker build -t $IMAGE .
+
+      - name: Push to ECR
+        run: |
+          IMAGE="${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.${{ secrets.AWS_REGION }}.amazonaws.com/${{ secrets.ECR_REPOSITORY }}:latest"
+          docker push $IMAGE
+
+      - name: Run New Container
+        run: |
+          docker stop expense_app_container || true
+          docker rm expense_app_container || true
+
+          IMAGE="${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.${{ secrets.AWS_REGION }}.amazonaws.com/${{ secrets.ECR_REPOSITORY }}:latest"
+          
+          docker pull $IMAGE
+
+          docker run -d \
+            --name expense_app_container \
+            --env-file /home/ubuntu/expense.env \
+            -v /home/ubuntu/logs:/app/logs \
+            -p 8000:8000 \
+            -p 8501:8501 \
+            $IMAGE

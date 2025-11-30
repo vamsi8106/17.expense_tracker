@@ -14,12 +14,11 @@
   },
   "editable": true,
   "graphTooltip": 2,
-  "id": null,
   "liveNow": false,
   "panels": [
 
     {
-      "datasource": { "type": "prometheus", "uid": "df5kf0nkfz7k0e" },
+      "datasource": { "type": "prometheus", "uid": "cf5n70p366kn4d" },
       "gridPos": { "h": 4, "w": 6, "x": 0, "y": 0 },
       "id": 1,
       "targets": [
@@ -30,20 +29,43 @@
     },
 
     {
-      "datasource": { "type": "prometheus", "uid": "df5kf0nkfz7k0e" },
+      "datasource": { "type": "prometheus", "uid": "cf5n70p366kn4d" },
       "gridPos": { "h": 4, "w": 6, "x": 6, "y": 0 },
       "id": 2,
       "targets": [
-        { "expr": "sum(rate(llm_api_calls_total[5m]))", "legendFormat": "LLM Calls / sec" }
+        { "expr": "sum(rate(llm_api_calls_total[5m]))", "legendFormat": "LLM RPS" }
       ],
       "title": "LLM Request Rate (RPS)",
       "type": "stat"
     },
 
     {
-      "datasource": { "type": "prometheus", "uid": "df5kf0nkfz7k0e" },
-      "gridPos": { "h": 6, "w": 12, "x": 0, "y": 4 },
+      "datasource": { "type": "prometheus", "uid": "cf5n70p366kn4d" },
+      "gridPos": { "h": 4, "w": 6, "x": 0, "y": 4 },
       "id": 3,
+      "targets": [
+        { "expr": "sum(mcp_tool_calls_total)", "legendFormat": "Tool Calls" }
+      ],
+      "title": "MCP Tool Calls (Total)",
+      "type": "stat"
+    },
+
+    {
+      "datasource": { "type": "prometheus", "uid": "cf5n70p366kn4d" },
+      "gridPos": { "h": 4, "w": 6, "x": 6, "y": 4 },
+      "id": 4,
+      "targets": [
+        { "expr": "sum(cache_hits_total)", "legendFormat": "Cache Hits" },
+        { "expr": "sum(cache_misses_total)", "legendFormat": "Cache Misses" }
+      ],
+      "title": "Cache Hits vs Misses",
+      "type": "timeseries"
+    },
+
+    {
+      "datasource": { "type": "prometheus", "uid": "cf5n70p366kn4d" },
+      "gridPos": { "h": 6, "w": 12, "x": 0, "y": 8 },
+      "id": 5,
       "targets": [
         {
           "expr": "histogram_quantile(0.50, sum(rate(llm_api_latency_seconds_bucket[5m])) by (le))",
@@ -60,71 +82,13 @@
       ],
       "title": "LLM Latency (P50 / P90 / P99)",
       "type": "timeseries"
-    },
-
-    {
-      "datasource": { "type": "prometheus", "uid": "df5kf0nkfz7k0e" },
-      "gridPos": { "h": 4, "w": 6, "x": 0, "y": 10 },
-      "id": 4,
-      "targets": [
-        { "expr": "sum(mcp_tool_calls_total)", "legendFormat": "Tool Calls" }
-      ],
-      "title": "MCP Tool Calls (Total)",
-      "type": "stat"
-    },
-
-    {
-      "datasource": { "type": "prometheus", "uid": "df5kf0nkfz7k0e" },
-      "gridPos": { "h": 4, "w": 6, "x": 6, "y": 10 },
-      "id": 5,
-      "targets": [
-        { "expr": "active_users_total", "legendFormat": "Active Users" }
-      ],
-      "title": "Active Users",
-      "type": "stat"
-    },
-
-    {
-      "datasource": { "type": "prometheus", "uid": "df5kf0nkfz7k0e" },
-      "gridPos": { "h": 6, "w": 12, "x": 0, "y": 14 },
-      "id": 6,
-      "targets": [
-        { "expr": "sum(cache_hits_total)", "legendFormat": "Cache Hits" },
-        { "expr": "sum(cache_misses_total)", "legendFormat": "Cache Misses" }
-      ],
-      "title": "Cache Hits vs Misses",
-      "type": "timeseries"
-    },
-
-    {
-      "datasource": { "type": "prometheus", "uid": "df5kf0nkfz7k0e" },
-      "gridPos": { "h": 6, "w": 12, "x": 0, "y": 20 },
-      "id": 7,
-      "targets": [
-        { "expr": "rate(node_cpu_seconds_total[5m])", "legendFormat": "{{cpu}}" }
-      ],
-      "title": "Node CPU Usage",
-      "type": "timeseries"
-    },
-
-    {
-      "datasource": { "type": "prometheus", "uid": "df5kf0nkfz7k0e" },
-      "gridPos": { "h": 6, "w": 12, "x": 0, "y": 26 },
-      "id": 8,
-      "targets": [
-        {
-          "expr": "node_memory_Active_bytes / 1024 / 1024 / 1024",
-          "legendFormat": "Active Mem (GB)"
-        }
-      ],
-      "title": "Node Memory Usage",
-      "type": "timeseries"
     }
+
   ],
   "refresh": "10s",
   "schemaVersion": 36,
   "style": "dark",
   "title": "Expense Assistant Observability",
-  "uid": "expense-obsv-v1",
-  "version": 1
+  "uid": "expense-obsv-v2",
+  "version": 3
 }

@@ -27,10 +27,25 @@ COPY src ./src
 
 # ------------ FINAL STAGE ------------
 FROM base AS final
+
+# Copy .env into container
+COPY .env /app/.env
+
+# Load .env for all child processes (Streamlit, Uvicorn, MCP server)
+ENV ENV_FILE="/app/.env"
+
 EXPOSE 8000
 EXPOSE 8501
 
 CMD ["/bin/bash", "-c", "\
+    export $(grep -v '^#' /app/.env | xargs) && \
     uvicorn src.api.main:app --host 0.0.0.0 --port 8000 & \
     streamlit run src/frontend/app.py --server.port=8501 --server.address=0.0.0.0 \
 "]
+
+# CMD ["/bin/bash", "-c", "\
+#     uvicorn src.api.main:app --host 0.0.0.0 --port 8000 & \
+#     streamlit run src/frontend/app.py --server.port=8501 --server.address=0.0.0.0 \
+# "]
+
+# CMD ["run.sh"]

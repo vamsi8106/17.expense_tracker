@@ -24,8 +24,6 @@ expenses.db
 *.ipynb
 
 # Shell script
-run.sh
 experiment.ipynb
 commands.txt
-.env
 
