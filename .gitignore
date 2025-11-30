@@ -14,4 +14,5 @@ experiment.ipynb
 commands.txt
 db/
 .env.example
+database_view.py
 
