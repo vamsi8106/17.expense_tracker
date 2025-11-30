@@ -18,3 +18,4 @@ df = pd.read_sql(query, engine)
 print("\n===== Recent DB Entries =====")
 print(df)
 
+
