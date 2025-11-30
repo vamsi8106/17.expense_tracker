@@ -10,7 +10,7 @@ A fully containerized **AI-powered Expense Assistant** built with:
 * **Prometheus + Grafana** (monitoring dashboard)
 * **Docker** (deployment ready)
 
-This README covers complete **local setup**, **environment configuration**, **running via Docker**, and **monitoring setup**, but **does NOT include AWS CI/CD** (kept separately in `docs/deploy.md`).
+This README covers complete **local setup**, **environment configuration**, **running via Docker**, and **monitoring setup**.
 
 ---
 
@@ -28,14 +28,14 @@ This README covers complete **local setup**, **environment configuration**, **ru
 │   ├── frontend/            → Streamlit UI
 │   ├── mcp_servers/         → MCP Expense Tool Server
 │   ├── utils/               → Redis, DB, logging, metrics
+|   ├── models/              → SQLAlchemy models (Expense model)
 │
 ├── monitoring/
 │   └── prometheus.yml       → Prometheus config
 │
 ├── logs/                    → Mounted log directory
-models/                  → SQLAlchemy models (Expense model)
-.dockerignore            → Docker build exclusions
-.gitignore               → Git exclusions
+├──.dockerignore            → Docker build exclusions
+├──.gitignore               → Git exclusions
 ├── .env                     → Environment variables
 ├── Dockerfile               → Combined Streamlit + FastAPI container
 ├── requirements.txt
@@ -217,9 +217,10 @@ docker run -d \
 
 1. Open Grafana → [http://localhost:3000](http://localhost:3000)
 2. Go to **Dashboards → Import**
-3. Upload file: `monitoring/grafana-dashboard-expense-monitoring.json`
-4. Select Prometheus datasource
-5. Dashboard loads instantly
+3. To get uid of datasource: http://localhost:3000/api/datasources
+4. Upload file: `monitoring/grafana-dashboard-expense-monitoring.json`
+5. Select Prometheus datasource
+6. Dashboard loads instantly
 
 ---
 
@@ -330,7 +331,7 @@ Start container and open:
 * Prometheus → [http://localhost:9090](http://localhost:9090)
 * Grafana → [http://localhost:3000](http://localhost:3000)
 
-For AWS deployment steps → see `docs/deploy.md`.
+For AWS deployment steps → see `README.md`.
 
 ---
 
