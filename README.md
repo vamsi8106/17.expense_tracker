@@ -96,7 +96,11 @@ This will be referenced in GitHub Actions.
 
 # 🛢️ Installation (monitor-node & app-node)
 
-For the full setup instructions, please see the detailed guide here:
+For the full local setup instructions, please see the detailed guide here:
+
+👉 [Installation Guide](./Local_Installtion.md)
+
+For the full setup instructions on EC2, please see the detailed guide here:
 
 👉 [Installation Guide](./Installation.md)
 
@@ -290,3 +294,4 @@ Below is your Streamlit UI screenshot:
 You can now have a complete, production-ready AWS EC2 deployment architecture with observability, CI/CD automation, secure networking, and scalable components. This setup follows cloud best practices and provides a strong foundation for future expansion.
 
 Additionally, one can introduce a Load Balancer and scale horizontally by adding more EC2 instances behind it. For even more advanced scalability and reliability, moving to Kubernetes (EKS) allows better orchestration, autoscaling, and resilient service management.
+
