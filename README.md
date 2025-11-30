@@ -4,6 +4,10 @@
 
 This project uses a **two-server AWS EC2 architecture** to deploy a production-ready application with full monitoring, CI/CD automation, and secure network communication.
 
+### Overall Setup on EC2
+
+![Complete setup](Images/complete.png)
+
 Setup includes:
 
 * **Application Server (app-node)** running Docker, Streamlit app, GitHub runner, and Node Exporter.
@@ -294,4 +298,5 @@ Below is your Streamlit UI screenshot:
 You can now have a complete, production-ready AWS EC2 deployment architecture with observability, CI/CD automation, secure networking, and scalable components. This setup follows cloud best practices and provides a strong foundation for future expansion.
 
 Additionally, one can introduce a Load Balancer and scale horizontally by adding more EC2 instances behind it. For even more advanced scalability and reliability, moving to Kubernetes (EKS) allows better orchestration, autoscaling, and resilient service management.
+
 
